@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos personalizados para la aplicación de Créditos UVA */
+body {
+  @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300;
+}
+
+.dark-mode-toggle {
+  @apply text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white;
+}
+
+.card {
+  @apply bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 transition-colors duration-300;
+}
+
+.gradient-bg {
+  background: linear-gradient(to right, theme('colors.uva-primary.500'), theme('colors.uva-primary.700'));
+}
+
+.dark .gradient-bg {
+  background: linear-gradient(to right, theme('colors.uva-primary.700'), theme('colors.uva-primary.900'));
+}
