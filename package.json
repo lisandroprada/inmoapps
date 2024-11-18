@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.1.5",
+    "@vueuse/firebase": "^11.2.0",
     "axios": "^1.6.5",
     "chart.js": "^4.4.6",
+    "firebase": "^11.0.2",
     "pinia": "^2.1.7",
     "vue": "^3.4.5",
     "vue-chartjs": "^5.3.2",
