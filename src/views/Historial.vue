@@ -12,7 +12,7 @@
       {{ simulacionesStore.error }}
     </div>
 
-    <div v-else-if="simulacionesStore.simulacionesGuardadas.length === 0" class="text-center py-8">
+    <div v-else-if="simulacionesStore.simulaciones.length === 0" class="text-center py-8">
       <p class="text-gray-600 dark:text-gray-400">No hay simulaciones guardadas</p>
     </div>
 
@@ -24,7 +24,7 @@
       >
         <div class="mb-4">
           <h3 class="text-lg font-semibold dark:text-white">
-            {{ simulacion.datosCliente.nombre }} {{ simulacion.datosCliente.apellido }}
+            {{ simulacion.datosCliente?.nombre || 'Cliente' }} {{ simulacion.datosCliente?.apellido || '' }}
           </h3>
           <p class="text-sm text-gray-600 dark:text-gray-400">
             {{ new Date(simulacion.fechaCreacion).toLocaleDateString() }}
@@ -56,13 +56,13 @@
         </div>
 
         <div class="mt-4 pt-4 border-t dark:border-gray-700">
-          <p class="text-sm text-gray-600 dark:text-gray-400">
+          <p v-if="simulacion.datosCliente?.email" class="text-sm text-gray-600 dark:text-gray-400">
             {{ simulacion.datosCliente.email }}
           </p>
-          <p class="text-sm text-gray-600 dark:text-gray-400">
+          <p v-if="simulacion.datosCliente?.telefono" class="text-sm text-gray-600 dark:text-gray-400">
             {{ simulacion.datosCliente.telefono }}
           </p>
-          <p v-if="simulacion.datosCliente.observaciones" class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          <p v-if="simulacion.datosCliente?.observaciones" class="mt-2 text-sm text-gray-600 dark:text-gray-400">
             {{ simulacion.datosCliente.observaciones }}
           </p>
         </div>
@@ -78,7 +78,7 @@ import { useSimulacionesStore } from '@/stores/simulaciones'
 const simulacionesStore = useSimulacionesStore()
 
 const simulacionesOrdenadas = computed(() => {
-  return [...simulacionesStore.simulacionesGuardadas].sort((a, b) => {
+  return [...simulacionesStore.simulaciones].sort((a, b) => {
     return new Date(b.fechaCreacion) - new Date(a.fechaCreacion)
   })
 })

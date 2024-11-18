@@ -240,11 +240,11 @@
 
                 <div v-if="authStore.user" class="mt-4">
                   <button
-                    @click="guardarSimulacion"
+                    @click="mostrarModalGuardar"
                     class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                     :disabled="simulacionesStore.loading"
                   >
-                    {{ simulacionesStore.loading ? 'Guardando...' : 'Guardar Simulación' }}
+                    Guardar Simulación
                   </button>
                 </div>
               </div>
@@ -318,21 +318,27 @@
     <div v-if="showNotification" class="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-lg" :class="{'bg-red-500': notificationType === 'error'}">
       {{ notificationMessage }}
     </div>
+    <GuardarSimulacionModal 
+      :isOpen="showGuardarModal" 
+      @close="showGuardarModal = false" 
+      @guardar="handleGuardarSimulacion" 
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
 import { Line } from 'vue-chartjs'
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js'
 import { useIndicadoresStore } from '@/stores/indicadores'
 import { useSimulacionesStore } from '@/stores/simulaciones'
 import { useAuthStore } from '@/stores/auth'
 import { useClientesStore } from '@/stores/clientes'
 import { useRouter } from 'vue-router'
+import GuardarSimulacionModal from '@/components/simulador/GuardarSimulacionModal.vue'
 
 // Registrar componentes de Chart.js
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler)
 
 // Stores y router
 const router = useRouter()
@@ -351,6 +357,7 @@ const chartData = ref(null)
 const showNotification = ref(false)
 const notificationMessage = ref('')
 const notificationType = ref('success') // 'success' o 'error'
+const showGuardarModal = ref(false)
 
 // Datos del solicitante
 const datosCliente = ref({
@@ -381,25 +388,24 @@ const showNotificationMessage = (message, type = 'success') => {
   }, 3000)
 }
 
-// Función para guardar simulación
-const guardarSimulacion = async () => {
+// Función para mostrar modal de guardado
+const mostrarModalGuardar = () => {
   if (!authStore.user) {
     showNotificationMessage('Debes iniciar sesión para guardar simulaciones', 'error')
     return
   }
+  showGuardarModal.value = true
+}
 
-  if (!clientesStore.clienteSeleccionado) {
-    showNotificationMessage('Debes seleccionar un cliente para guardar la simulación', 'error')
-    return
-  }
-
+// Función para guardar simulación
+const handleGuardarSimulacion = async (cliente) => {
   try {
     const simulacion = {
-      clienteId: clientesStore.clienteSeleccionado.id,
-      cliente: {
-        nombre: clientesStore.clienteSeleccionado.nombre,
-        apellido: clientesStore.clienteSeleccionado.apellido,
-        email: clientesStore.clienteSeleccionado.email
+      clienteId: cliente.id,
+      datosCliente: {
+        nombre: cliente.nombre,
+        apellido: cliente.apellido,
+        email: cliente.email
       },
       parametros: {
         montoSolicitado: montoSolicitado.value,

@@ -5,7 +5,9 @@ import { useAuthStore } from './auth'
 
 export const useSimulacionesStore = defineStore('simulaciones', {
   state: () => ({
-    simulaciones: []
+    simulaciones: [],
+    loading: false,
+    error: null
   }),
   
   actions: {
@@ -14,10 +16,15 @@ export const useSimulacionesStore = defineStore('simulaciones', {
         const authStore = useAuthStore()
         if (!authStore.user) throw new Error('Usuario no autenticado')
 
+        // Validar que la simulación tenga los datos necesarios
+        if (!simulacion.datosCliente?.nombre || !simulacion.datosCliente?.apellido) {
+          throw new Error('La simulación debe incluir los datos del cliente')
+        }
+
         const simulacionData = {
           ...simulacion,
           userId: authStore.user.uid,
-          createdAt: new Date().toISOString()
+          fechaCreacion: new Date().toISOString()
         }
 
         const docRef = await addDoc(collection(db, 'simulaciones'), simulacionData)
@@ -30,24 +37,36 @@ export const useSimulacionesStore = defineStore('simulaciones', {
     },
 
     async cargarSimulaciones() {
+      this.loading = true
+      this.error = null
       try {
         const authStore = useAuthStore()
-        if (!authStore.user) return
+        if (!authStore.user) {
+          this.simulaciones = []
+          return
+        }
 
         const q = query(
           collection(db, 'simulaciones'),
           where('userId', '==', authStore.user.uid),
-          orderBy('createdAt', 'desc')
+          orderBy('fechaCreacion', 'desc')
         )
 
         const querySnapshot = await getDocs(q)
-        this.simulaciones = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }))
+        this.simulaciones = querySnapshot.docs.map(doc => {
+          const data = doc.data()
+          return {
+            id: doc.id,
+            ...data,
+            datosCliente: data.datosCliente || {}
+          }
+        })
       } catch (error) {
         console.error('Error al cargar simulaciones:', error)
-        throw error
+        this.error = 'Error al cargar las simulaciones'
+        this.simulaciones = []
+      } finally {
+        this.loading = false
       }
     }
   }

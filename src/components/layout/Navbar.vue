@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { 
@@ -9,7 +10,10 @@ import {
   ClockIcon,
   SunIcon,
   MoonIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  InformationCircleIcon,
+  BuildingLibraryIcon,
+  UsersIcon
 } from '@heroicons/vue/24/outline'
 
 const router = useRouter()
@@ -24,8 +28,25 @@ const menuItems = [
   { name: 'Simulador', route: '/simulador', icon: CalculatorIcon },
   { name: 'Definición UVA', route: '/definicion', icon: DocumentTextIcon },
   { name: 'Gráficos', route: '/graficos', icon: ChartBarIcon },
-  { name: 'Historial', route: '/historial', icon: ClockIcon }
+  { name: 'Acerca de', route: '/about', icon: InformationCircleIcon },
+  { name: 'Comparativa Bancos', route: '/comparativa-bancos', icon: BuildingLibraryIcon },
+  { 
+    name: 'Clientes', 
+    route: '/clientes', 
+    icon: UsersIcon,
+    requiresAuth: true 
+  },
+  { 
+    name: 'Historial', 
+    route: '/historial', 
+    icon: ClockIcon,
+    requiresAuth: true 
+  }
 ]
+
+const filteredMenuItems = computed(() => {
+  return menuItems.filter(item => !item.requiresAuth || (item.requiresAuth && authStore.user))
+})
 
 async function handleLogout() {
   try {
@@ -49,39 +70,13 @@ async function handleLogout() {
       
       <div class="hidden md:flex space-x-6">
         <router-link 
-          v-for="item in menuItems" 
+          v-for="item in filteredMenuItems" 
           :key="item.route"
           :to="item.route"
           class="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-uva-primary-600 dark:hover:text-uva-primary-300 transition-colors"
         >
           <component :is="item.icon" class="h-5 w-5" />
           <span>{{ item.name }}</span>
-        </router-link>
-        <router-link
-          to="/about"
-          class="text-gray-800 dark:text-white hover:text-uva-primary-600 dark:hover:text-uva-primary-300 px-3 py-2 rounded-md text-sm font-medium"
-        >
-          Acerca de
-        </router-link>
-        <router-link
-          to="/comparativa-bancos"
-          class="text-gray-800 dark:text-white hover:text-uva-primary-600 dark:hover:text-uva-primary-300 px-3 py-2 rounded-md text-sm font-medium"
-        >
-          Comparativa Bancos
-        </router-link>
-        <router-link
-          v-if="authStore.user"
-          to="/clientes"
-          class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-        >
-          Clientes
-        </router-link>
-        <router-link
-          v-if="authStore.user"
-          to="/historial"
-          class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-        >
-          Historial
         </router-link>
       </div>
       

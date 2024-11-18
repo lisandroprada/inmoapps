@@ -7,12 +7,14 @@ export const useClientesStore = defineStore('clientes', {
   state: () => ({
     clientes: [],
     clienteSeleccionado: null,
-    loading: false
+    loading: false,
+    error: null
   }),
 
   actions: {
     async cargarClientes() {
       this.loading = true
+      this.error = null
       try {
         const authStore = useAuthStore()
         if (!authStore.user) return
@@ -30,6 +32,7 @@ export const useClientesStore = defineStore('clientes', {
         }))
       } catch (error) {
         console.error('Error al cargar clientes:', error)
+        this.error = error.message
         throw error
       } finally {
         this.loading = false
@@ -37,6 +40,8 @@ export const useClientesStore = defineStore('clientes', {
     },
 
     async agregarCliente(cliente) {
+      this.loading = true
+      this.error = null
       try {
         const authStore = useAuthStore()
         if (!authStore.user) throw new Error('Usuario no autenticado')
@@ -53,11 +58,16 @@ export const useClientesStore = defineStore('clientes', {
         return nuevoCliente
       } catch (error) {
         console.error('Error al agregar cliente:', error)
+        this.error = error.message
         throw error
+      } finally {
+        this.loading = false
       }
     },
 
     async actualizarCliente(id, datos) {
+      this.loading = true
+      this.error = null
       try {
         const docRef = doc(db, 'clientes', id)
         await updateDoc(docRef, {
@@ -71,17 +81,25 @@ export const useClientesStore = defineStore('clientes', {
         }
       } catch (error) {
         console.error('Error al actualizar cliente:', error)
+        this.error = error.message
         throw error
+      } finally {
+        this.loading = false
       }
     },
 
     async eliminarCliente(id) {
+      this.loading = true
+      this.error = null
       try {
         await deleteDoc(doc(db, 'clientes', id))
         this.clientes = this.clientes.filter(c => c.id !== id)
       } catch (error) {
         console.error('Error al eliminar cliente:', error)
+        this.error = error.message
         throw error
+      } finally {
+        this.loading = false
       }
     },
 
