@@ -69,6 +69,20 @@ async function handleLogout() {
         >
           Comparativa Bancos
         </router-link>
+        <router-link
+          v-if="authStore.user"
+          to="/clientes"
+          class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+        >
+          Clientes
+        </router-link>
+        <router-link
+          v-if="authStore.user"
+          to="/historial"
+          class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+        >
+          Historial
+        </router-link>
       </div>
       
       <div class="flex items-center space-x-4">
