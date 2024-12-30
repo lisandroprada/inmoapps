@@ -4,20 +4,34 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 // Importar componentes de páginas
 import Home from '@/views/Home.vue'
-import Simulador from '@/views/Simulador.vue'
+import Simulador from '../views/Simulador.vue'
 import DefinicionUVA from '@/views/DefinicionUVA.vue'
-import Graficos from '@/views/Graficos.vue'
+import Graficos from '../views/Graficos.vue'
 import Historial from '@/views/Historial.vue'
 import LoginForm from '@/components/auth/LoginForm.vue'
 import About from '@/views/About.vue'
 import ComparativaBancos from '@/views/ComparativaBancos.vue'
 import Clientes from '@/views/Clientes.vue'
+import VerifySimulation from '@/views/VerifySimulation.vue'
+import Test from '../views/test.vue'
+import Configuracion from '@/views/Configuracion.vue'
+import Proyecciones from '../views/Proyecciones.vue'
 
 const routes = [
   {
     path: '/',
+    redirect: '/home'
+  },
+  {
+    path: '/home',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/graficos',
+    name: 'Graficos',
+    component: Graficos,
+    meta: { requiresAuth: true }
   },
   {
     path: '/simulador',
@@ -26,15 +40,14 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/proyecciones',
+    name: 'Proyecciones',
+    component: Proyecciones
+  },
+  {
     path: '/definicion',
     name: 'DefinicionUVA',
     component: DefinicionUVA
-  },
-  {
-    path: '/graficos',
-    name: 'Graficos',
-    component: Graficos,
-    meta: { requiresAuth: true }
   },
   {
     path: '/historial',
@@ -60,9 +73,25 @@ const routes = [
     component: About
   },
   {
+    path: '/test',
+    name: 'TEST',
+    component: Test
+  },
+  {
     path: '/comparativa-bancos',
     name: 'ComparativaBancos',
     component: ComparativaBancos
+  },
+  {
+    path: '/verify/:id',
+    name: 'verify',
+    component: VerifySimulation
+  },
+  {
+    path: '/configuracion',
+    name: 'Configuracion',
+    component: Configuracion,
+    meta: { requiresAuth: true }
   }
 ]
 

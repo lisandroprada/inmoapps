@@ -26,9 +26,21 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <!-- UVA -->
       <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-          Evolución del Valor UVA
-        </h2>
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+            Evolución del Valor UVA
+          </h2>
+          <button
+            @click="exportarAExcel('uva')"
+            class="inline-flex items-center px-3 py-1 text-sm rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+            title="Exportar a Excel"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+            Excel
+          </button>
+        </div>
         <div v-if="indicadoresStore.uva.loading" class="flex items-center justify-center h-64">
           <div class="text-gray-500">Cargando datos...</div>
         </div>
@@ -45,9 +57,21 @@
 
       <!-- Inflación Mensual -->
       <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-          Inflación Mensual
-        </h2>
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+            Inflación Mensual
+          </h2>
+          <button
+            @click="exportarAExcel('inflacion')"
+            class="inline-flex items-center px-3 py-1 text-sm rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+            title="Exportar a Excel"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+            Excel
+          </button>
+        </div>
         <div v-if="indicadoresStore.inflacion.loading" class="flex items-center justify-center h-64">
           <div class="text-gray-500">Cargando datos...</div>
         </div>
@@ -64,9 +88,21 @@
 
       <!-- Inflación Interanual -->
       <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-          Inflación Interanual
-        </h2>
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+            Inflación Interanual
+          </h2>
+          <button
+            @click="exportarAExcel('inflacionInteranual')"
+            class="inline-flex items-center px-3 py-1 text-sm rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+            title="Exportar a Excel"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+            Excel
+          </button>
+        </div>
         <div v-if="indicadoresStore.inflacionInteranual.loading" class="flex items-center justify-center h-64">
           <div class="text-gray-500">Cargando datos...</div>
         </div>
@@ -83,9 +119,21 @@
 
       <!-- Riesgo País -->
       <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-          Riesgo País
-        </h2>
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+            Riesgo País
+          </h2>
+          <button
+            @click="exportarAExcel('riesgoPais')"
+            class="inline-flex items-center px-3 py-1 text-sm rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+            title="Exportar a Excel"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+            Excel
+          </button>
+        </div>
         <div v-if="indicadoresStore.riesgoPais.loading" class="flex items-center justify-center h-64">
           <div class="text-gray-500">Cargando datos...</div>
         </div>
@@ -108,6 +156,7 @@ import { ref, onMounted } from 'vue'
 import { Line } from 'vue-chartjs'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js'
 import { useIndicadoresStore } from '../stores/indicadores'
+import * as XLSX from 'xlsx'
 
 // Registrar componentes de Chart.js
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler)
@@ -192,6 +241,28 @@ const getChartOptions = (indicador) => {
       intersect: false
     }
   }
+}
+
+// Función para exportar a Excel
+const exportarAExcel = (indicador) => {
+  const datos = indicadoresStore.datosFiltrados[indicador] || []
+  if (!datos.length) return
+
+  // Preparar los datos para Excel
+  const datosParaExcel = datos.map(item => ({
+    Fecha: new Date(item.fecha).toLocaleDateString('es-AR'),
+    Valor: item.valor
+  }))
+
+  // Crear libro de trabajo y hoja
+  const wb = XLSX.utils.book_new()
+  const ws = XLSX.utils.json_to_sheet(datosParaExcel)
+
+  // Agregar la hoja al libro
+  XLSX.utils.book_append_sheet(wb, ws, indicador.toUpperCase())
+
+  // Guardar el archivo
+  XLSX.writeFile(wb, `${indicador}_${new Date().toISOString().split('T')[0]}.xlsx`)
 }
 
 // Cargar datos al montar el componente

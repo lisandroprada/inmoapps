@@ -6,7 +6,7 @@
       <table class="min-w-full bg-white dark:bg-gray-800 shadow-lg rounded-lg">
         <thead>
           <tr class="bg-gray-100 dark:bg-gray-700">
-            <th class="sticky left-0 bg-gray-100 dark:bg-gray-700 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Banco</th>
+            <th class="sticky left-0 bg-gray-100 dark:bg-gray-700 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider z-[10]">Banco</th>
             <th v-for="header in tableHeaders" :key="header" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
               {{ header }}
             </th>
@@ -14,7 +14,7 @@
         </thead>
         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
           <tr v-for="(bank, bankName) in banksData" :key="bankName" class="hover:bg-gray-50 dark:hover:bg-gray-700">
-            <td class="sticky left-0 bg-white dark:bg-gray-800 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+            <td class="sticky left-0 bg-white dark:bg-gray-800 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white z-[10]">
               {{ bankName }}
             </td>
             <td v-for="header in tableHeaders" :key="header" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">

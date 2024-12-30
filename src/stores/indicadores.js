@@ -57,6 +57,21 @@ export const useIndicadoresStore = defineStore('indicadores', {
       }
     },
 
+    valorUVA: (state) => {
+      if (!state.uva.datos.length) return 0
+      return state.uva.datos[state.uva.datos.length - 1].valor
+    },
+
+    fechaActualizacion: (state) => {
+      if (!state.uva.datos.length) return ''
+      const fecha = new Date(state.uva.datos[state.uva.datos.length - 1].fecha)
+      return fecha.toLocaleDateString('es-AR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      })
+    },
+
     chartData: (state) => (indicador) => {
       const datos = state.datosFiltrados[indicador] || []
       const configuraciones = {
